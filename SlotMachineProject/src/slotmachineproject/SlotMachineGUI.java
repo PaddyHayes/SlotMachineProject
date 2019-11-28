@@ -10,6 +10,9 @@ package slotmachineproject;
  *
  * @author Paddy
  */
+import java.awt.Image;
+import java.util.concurrent.TimeUnit;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 public class SlotMachineGUI  extends javax.swing.JFrame {
     SlotMachineMethods smm = new SlotMachineMethods();
@@ -87,7 +90,8 @@ public class SlotMachineGUI  extends javax.swing.JFrame {
             }
         });
 
-        slotMachinebtn.setText("jButton2");
+        slotMachinebtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/slotmachineproject/images/leverUp.png"))); // NOI18N
+        slotMachinebtn.setToolTipText("");
         slotMachinebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 slotMachinebtnActionPerformed(evt);
@@ -99,18 +103,18 @@ public class SlotMachineGUI  extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(36, 36, 36)
                 .addComponent(insertCoinbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 467, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 460, Short.MAX_VALUE)
                 .addComponent(slotMachinebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(432, Short.MAX_VALUE)
-                .addComponent(insertCoinbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
-            .addComponent(slotMachinebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 53, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(slotMachinebtn, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(insertCoinbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         slotMachinebtn.getAccessibleContext().setAccessibleName("");
@@ -118,7 +122,7 @@ public class SlotMachineGUI  extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    int playerMoney = 0;
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
@@ -126,13 +130,41 @@ public class SlotMachineGUI  extends javax.swing.JFrame {
 
     private void insertCoinbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertCoinbtnActionPerformed
         // TODO add your handling code here:
-        playerMoney++;
-        JOptionPane.showMessageDialog(null, playerMoney);
+        smm.addMoney(1);
     }//GEN-LAST:event_insertCoinbtnActionPerformed
 
     private void slotMachinebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slotMachinebtnActionPerformed
         // TODO add your handling code here:
+        if(smm.getMoney()>=1)
+        {
+            //have money
+            smm.addMoney(-1);
+            JOptionPane.showMessageDialog(null,"Current money: " + smm.getMoney());
+        }
         
+        else
+        {
+            JOptionPane.showMessageDialog(null, "No money Fam");
+        }
+        
+        if(evt.getSource()==slotMachinebtn){
+        
+        try
+        {
+            //slotMachinebtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/slotmachineproject/images/leverUp.png")));
+        Image leverDown = ImageIO.read(getClass().getResource("/slotmachineproject/images/leverDown.png"));
+        slotMachinebtn.setIcon(new ImageIcon(leverDown));
+        Thread.sleep(0);
+        Image leverUp = ImageIO.read(getClass().getResource("/slotmachineproject/images/images/leverUp.png"));
+        slotMachinebtn.setIcon(new ImageIcon(leverUp));
+        
+        
+        }
+        catch(Exception ex)
+        {
+            System.out.print(ex);
+        }
+        }
     }//GEN-LAST:event_slotMachinebtnActionPerformed
 
     /**

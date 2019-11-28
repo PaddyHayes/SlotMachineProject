@@ -1,5 +1,7 @@
 package slotmachineproject;
 
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,11 +15,13 @@ package slotmachineproject;
 public class SlotMachineMethods {
     int playerMoney = 0;
 
-public int addMoney(int playerMoney){
-    playerMoney++;
-    
-    return playerMoney;
+public void addMoney(int moneyAdd){
+   playerMoney+=moneyAdd;
+JOptionPane.showMessageDialog(null, playerMoney);
+}
 
+public int getMoney(){
+    return playerMoney;
 }
     
     
