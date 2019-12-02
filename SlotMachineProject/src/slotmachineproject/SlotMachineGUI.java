@@ -1,5 +1,5 @@
 package slotmachineproject;
-
+//Any code that isn't reference that I didn't write myself is generate by scene builder
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,17 +11,29 @@ package slotmachineproject;
  * @author Paddy
  */
 import java.awt.Image;
+import java.awt.EventQueue;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+//This method creates the GUI and extends and is creating an instance of SlotMachineMethods.
 public class SlotMachineGUI  extends javax.swing.JFrame {
     SlotMachineMethods smm = new SlotMachineMethods();
-
+//These define the images
+     Image slotMachineKronk;
+     Image num7;
+     Image slotMachineBanana;
+     Image leverUp;
+     Image leverDown;
     /**
      * Creates new form SlotMachineGUI
      */
     public SlotMachineGUI() {
         initComponents();
+        smm.ScoreDetails = new ArrayList<>();
+        smm.f = new File("score.dat");
     }
 
     /**
@@ -33,7 +45,9 @@ public class SlotMachineGUI  extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        slotMachineKronklbl = new javax.swing.JLabel();
         firstSlotPlacelbl = new javax.swing.JLabel();
+        slotMachineBananalbl = new javax.swing.JLabel();
         slotMachinelbl = new javax.swing.JLabel();
         slotMachinebtn = new javax.swing.JButton();
         insertCoinbtn = new javax.swing.JButton();
@@ -43,14 +57,22 @@ public class SlotMachineGUI  extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(200, 200));
         getContentPane().setLayout(null);
 
+        slotMachineKronklbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/slotmachineproject/images/slotMachineKronk.jpg"))); // NOI18N
+        getContentPane().add(slotMachineKronklbl);
+        slotMachineKronklbl.setBounds(300, 230, 50, 40);
+
         firstSlotPlacelbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/slotmachineproject/images/slotNum7.png"))); // NOI18N
         firstSlotPlacelbl.setBounds(40, 20, 20, 20);
         getContentPane().add(firstSlotPlacelbl);
-        firstSlotPlacelbl.setBounds(190, 220, 50, 64);
+        firstSlotPlacelbl.setBounds(180, 220, 40, 60);
+
+        slotMachineBananalbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/slotmachineproject/images/slotMachineBanana.png"))); // NOI18N
+        getContentPane().add(slotMachineBananalbl);
+        slotMachineBananalbl.setBounds(240, 230, 40, 30);
 
         slotMachinelbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/slotmachineproject/images/slotMachine.png"))); // NOI18N
         getContentPane().add(slotMachinelbl);
-        slotMachinelbl.setBounds(150, 130, 240, 200);
+        slotMachinelbl.setBounds(140, 130, 240, 200);
 
         slotMachinebtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/slotmachineproject/images/leverUp.png"))); // NOI18N
         slotMachinebtn.setToolTipText("");
@@ -60,7 +82,7 @@ public class SlotMachineGUI  extends javax.swing.JFrame {
             }
         });
         getContentPane().add(slotMachinebtn);
-        slotMachinebtn.setBounds(390, 130, 81, 260);
+        slotMachinebtn.setBounds(380, 130, 81, 260);
 
         insertCoinbtn.setBackground(new java.awt.Color(20, 20, 20));
         insertCoinbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/slotmachineproject/images/coin2.png"))); // NOI18N
@@ -77,39 +99,62 @@ public class SlotMachineGUI  extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    //Random number generator
+    public void changeSlotImage(){
+        Random randy = new Random();
 
-    
+        int randyNo = randy.nextInt(2);
+        switch (randyNo) {
+                    case 0:
+                        firstSlotPlacelbl.setIcon(new ImageIcon(getClass().getResource("/slotmachineproject/images/slotMachineKronk.png")));
+                        break;
+                    case 1:
+                         firstSlotPlacelbl.setIcon(new ImageIcon(getClass().getResource("/slotmachineproject/images/slotMachineKronk.png")));
+                        break;
+                    case 2:
+                         firstSlotPlacelbl.setIcon(new ImageIcon(getClass().getResource("/slotmachineproject/images/slotMachineKronk.png")));
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Error!", "Error chun!", JOptionPane.ERROR_MESSAGE);
+                        break;
+                }
+}
+    //Perform and action when the slotMachinebtn is clicked
     private void slotMachinebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slotMachinebtnActionPerformed
         // TODO add your handling code here:
-        if(smm.getMoney()>=1)
-        {
-            //have money
-            smm.addMoney(-1);
-            JOptionPane.showMessageDialog(null,"Current money: " + smm.getMoney());
-        }
-
-        else
-        {
-            JOptionPane.showMessageDialog(null, "No money Fam");
-        }
-
+       
+           //
         if(evt.getSource()==slotMachinebtn){
             //got help from Ryan Madigan (3rd year games dev)
             try
             {
-                //slotMachinebtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/slotmachineproject/images/leverUp.png")));
-                Image leverDown = ImageIO.read(getClass().getResource("/slotmachineproject/images/leverDown.png"));
+                //image by default is this
+                leverUp = ImageIO.read(getClass().getResource("/slotmachineproject/images/leverUp.png"));
+                //then is changed to this
+                leverDown= ImageIO.read(getClass().getResource("/slotmachineproject/images/leverDown.png"));
+                
+                slotMachinebtn.setIcon(new ImageIcon(leverUp));  
+                Thread.sleep(1);
                 slotMachinebtn.setIcon(new ImageIcon(leverDown));
-                Thread.sleep(0);
-                Image leverUp = ImageIO.read(getClass().getResource("/slotmachineproject/images/images/leverUp.png"));
+                smm.takeMoney();
                 slotMachinebtn.setIcon(new ImageIcon(leverUp));
-
-            }
+                
+                 
+               //I got the images from google images and I then cropped and edited myself
+                slotMachineKronk = ImageIO.read(getClass().getResource("/slotmachineproject/images/slotMachineKronk.png"));
+                num7 = ImageIO.read(getClass().getResource("/slotmachineproject/images/slotNum7.png"));
+                slotMachineBanana = ImageIO.read(getClass().getResource("/slotmachineproject/images/slotMachineBanana.png"));
+                
+            }//It catches exception
             catch(Exception ex)
-            {
+                
+                
+            {//Prints out the exception
                 System.out.print(ex);
             }
-        }
+            
+        }//Should change slot image
+        changeSlotImage();
     }//GEN-LAST:event_slotMachinebtnActionPerformed
 
     private void insertCoinbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertCoinbtnActionPerformed
@@ -133,15 +178,11 @@ public class SlotMachineGUI  extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SlotMachineGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SlotMachineGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SlotMachineGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(SlotMachineGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
@@ -155,6 +196,8 @@ public class SlotMachineGUI  extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel firstSlotPlacelbl;
     private javax.swing.JButton insertCoinbtn;
+    private javax.swing.JLabel slotMachineBananalbl;
+    private javax.swing.JLabel slotMachineKronklbl;
     private javax.swing.JButton slotMachinebtn;
     private javax.swing.JLabel slotMachinelbl;
     // End of variables declaration//GEN-END:variables
